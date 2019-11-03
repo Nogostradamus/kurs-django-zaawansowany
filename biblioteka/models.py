@@ -1,4 +1,5 @@
 from django.db import models
+from .managers import KsiazkaManager
 
 class Autor(models.Model):
     imie = models.CharField(max_length=20, blank=False)
@@ -11,7 +12,10 @@ class Autor(models.Model):
 class Ksiazka(models.Model):
     tytul = models.CharField(max_length=50, blank=False)
     rok_wydania = models.IntegerField(blank=False)
-    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE, related_name="ksiazki")
+
+    objects = models.Manager()
+    ksiazki = KsiazkaManager()
 
     def __str__(self):
         return self.tytul
