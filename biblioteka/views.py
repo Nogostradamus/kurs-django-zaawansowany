@@ -12,6 +12,26 @@ def glowna(request):
     dodaj_do_bazy(autor, ksiazka)
     return HttpResponse("To jest nasza glowna strona")
 
+def wyslanie_maila(request):
+    if request.method == 'POST':
+        if request.POST.get('email', False):
+            email = request.POST['email']
+            wiadomosc = "Naprawde klikneli na link: " + email
+            ksiazki = Ksiazka.objects.all()
+            for ksiazka in ksiazki:
+                wiadomosc += '\n\r' + ksiazka.tytul
+            send_mail(
+                "Odwiedzili nasza strone!",
+                wiadomosc,
+                email,
+                ['hiketi5027@hideemail.net'],
+                fail_silently=False
+            )
+            return HttpResponse("Mail zostal wyslany")
+
+    return render(request, 'email_form.html')
+
+
 
 def dodaj_do_bazy(autor, ksiazka):
 
