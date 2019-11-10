@@ -1,5 +1,7 @@
 from django.db import models
 from .managers import KsiazkaManager
+from django.core.validators import MaxValueValidator
+from .validators import validate_rok
 
 class Autor(models.Model):
     imie = models.CharField(max_length=20, blank=False)
@@ -11,11 +13,15 @@ class Autor(models.Model):
 
 class Ksiazka(models.Model):
     tytul = models.CharField(max_length=50, blank=False)
-    rok_wydania = models.IntegerField(blank=False)
+    rok_wydania = models.IntegerField(blank=False, validators=[validate_rok])
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE, related_name="ksiazki")
 
     objects = models.Manager()
     ksiazki = KsiazkaManager()
+
+    def save(self, *args, **kwargs):
+        validate_rok(self.rok_wydania)
+        super(Ksiazka, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.tytul

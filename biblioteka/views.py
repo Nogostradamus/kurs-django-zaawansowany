@@ -4,6 +4,17 @@ from django.http import HttpResponse
 from .models import Ksiazka, Autor
 from django.db import transaction
 from django.core.mail import send_mail
+from django.contrib import messages
+from .forms import NaszForm
+
+def nowy_form(request):
+    if request.method == 'POST':
+        form = NaszForm(request.POST)
+        if form.is_valid():
+            print("Form is valid")
+    else:
+        form = NaszForm()
+    return render(request, 'nasz_form.html', {'form': form})
 
 def glowna(request):
     # nasz_sygnal.send(sender=Autor, imie="Krystian")
@@ -20,14 +31,18 @@ def wyslanie_maila(request):
             ksiazki = Ksiazka.objects.all()
             for ksiazka in ksiazki:
                 wiadomosc += '\n\r' + ksiazka.tytul
-            send_mail(
-                "Odwiedzili nasza strone!",
-                wiadomosc,
-                email,
-                ['hiketi5027@hideemail.net'],
-                fail_silently=False
-            )
-            return HttpResponse("Mail zostal wyslany")
+            try:
+                send_mail(
+                    "Odwiedzili nasza strone!",
+                    wiadomosc,
+                    email,
+                    ['hiketi5027@hideemail.net'],
+                    fail_silently=False
+                )
+                messages.success(request, "Mail zostal wyslany")
+            except:
+                messages.error(request, "Error wysylania maila")
+            #return HttpResponse("Mail zostal wyslany")
 
     return render(request, 'email_form.html')
 
