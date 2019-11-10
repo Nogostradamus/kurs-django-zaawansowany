@@ -16,6 +16,7 @@ class Ksiazka(models.Model):
     rok_wydania = models.IntegerField(blank=False, validators=[validate_rok])
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE, related_name="ksiazki")
 
+
     objects = models.Manager()
     ksiazki = KsiazkaManager()
 

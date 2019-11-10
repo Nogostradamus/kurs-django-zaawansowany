@@ -37,11 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'debug_toolbar',
     'django_extensions',
     'biblioteka'
 ]
 
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]
+
 MIDDLEWARE = [
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'zaawansowany.urls'
 
 TEMPLATES = [
@@ -84,7 +89,7 @@ DATABASES = {
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '<twoj_api_key>'
+EMAIL_HOST_PASSWORD = '<apikey>'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

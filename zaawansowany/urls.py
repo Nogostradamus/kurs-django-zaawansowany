@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from biblioteka.views import glowna, wyslanie_maila, nowy_form
 from django.contrib.auth.views import (
     PasswordResetView,
@@ -7,6 +7,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView
 )
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -21,3 +22,9 @@ urlpatterns = [
     path('password_reset_complete',
          PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
+
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#         path('__debug__/', include(debug_toolbar.urls)),
+#     ] + urlpatterns
