@@ -16,8 +16,8 @@ autor_log.addHandler(log_handler)
 #
 @receiver([post_save], sender=Autor)
 def autor_po_zapisaniu(sender, instance, **kwargs):
-    print('Wlasnie zapisalismy autora')
-    print(instance.imie)
+    # print('Wlasnie zapisalismy autora')
+    # print(instance.imie)
     autor_log.info("Ktos stworzyl autora " + instance.imie + " "+ instance.nazwisko)
 
 # @receiver([pre_save], sender=Autor)
